@@ -17,12 +17,13 @@ public class KeyListener extends InputListener {
 		//if isEnabled("Debug.Sort") sPlayer.sendNotification("Key pressed:", keypressed, Material.BOOK);
 		String hotkey = SortInventory.config.getString("Sort.SortKey");
 		// sPlayer.sendMessage("Config Hotkey is:"+hotkey);
-		if (hotkey==null) {
-			Messages.showError("The Sortkey is not defined in config.yml");
-			return;
-		}
 		if (keypressed==null) {
 			//Messages.showError("Keypressed is null! Contact the plugindeveloper.");
+			return;
+		}
+		if (hotkey==null) {
+			hotkey="KEY_I";
+			Messages.showError("The Sortkey is not defined in config.yml");
 			return;
 		}
 		if (hotkey.equals(keypressed)) {
