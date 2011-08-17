@@ -26,6 +26,11 @@ groups:
         permissions:
             permissions.build: true
             sortinventory.use: true
+            sortinventory.stack.tools: true
+            sortinventory.stack.weapons: true
+            sortinventory.stack.armor: true
+            sortinventory.stack.food: true
+            sortinventory.stack.vehicles: true
             worlds:
                 oceanworld:
                     smartplugin.tool: true

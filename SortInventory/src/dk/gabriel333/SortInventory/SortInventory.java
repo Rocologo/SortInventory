@@ -201,8 +201,10 @@ public class SortInventory extends JavaPlugin {
 					}
 					return (permission3Handler.has(p, PERMISSION_NODE + label));
 				}
+			} else {
+				// player is OP
+				return true;
 			}
-			// player is OP
 		}
 		// The user had no permissions. returns false;
 		return false;

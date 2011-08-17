@@ -151,47 +151,65 @@ public class SortInventoryCommand implements CommandExecutor {
 		from_amt = fromitem.getAmount();
 		to_amt = toitem.getAmount();
 		total_amt = from_amt + to_amt;
-		if ((from_amt == 0 && to_amt==0) || from_amt==0){
-			//if (SortInventory.isEnabled("Debug.SortInventory")) {
-			//	p.sendMessage("0) Both slot is empty: (from,to)=("+fromslot+">"+toslot+") Dont do anything");
-			//}
+		if ((from_amt == 0 && to_amt == 0) || from_amt == 0) {
+			// if (SortInventory.isEnabled("Debug.SortInventory")) {
+			// p.sendMessage("0) Both slot is empty: (from,to)=("+fromslot+">"+toslot+") Dont do anything");
+			// }
 			return;
-		} else if (to_amt==0 && from_amt>0) {
+		} else if (to_amt == 0 && from_amt > 0) {
 			to_amt = total_amt;
 			from_amt = 0;
 			if (SortInventory.isEnabled("Debug.SortInventory")) {
-				p.sendMessage("1) (from,to)=("+fromslot+">"+toslot+") To_amt=" + to_amt + " from_amt="
-						+ from_amt + " total_amt=" + total_amt);
+				p.sendMessage("1) (from,to)=(" + fromslot + ">" + toslot
+						+ ") To_amt=" + to_amt + " from_amt=" + from_amt
+						+ " total_amt=" + total_amt);
 			}
 			toinventory.setItem(toslot, fromitem);
 			toinventory.getItem(toslot).setAmount(to_amt);
 			frominventory.clear(fromslot);
 			return;
-		} else { 
-			// Here is to_amt > and from_amt>0 so move all whats posible if 
+		} else {
+			// Here is to_amt > and from_amt>0 so move all whats posible if
 			// it is the same kind of item.
-			
-			if (SortInventory.isEnabled("Debug.SortInventory")) {
-				p.sendMessage("2) slot("+fromslot+">"+toslot+") getData:(" + fromitem.getData() + "," + toitem.getData()
-						+ ") Durability: (" + fromitem.getDurability() +"," +toitem.getDurability()
-						+ ") TypeId: ("+ fromitem.getTypeId() + "," +toitem.getTypeId()+")");
+			if (SortInventory.hasPerm(p, "stack.*")) {
+				// okay...
+			} else if ((isTool(fromitem) && !SortInventory.hasPerm(p,
+					"stack.tools"))
+					|| (isWeapon(fromitem) && !SortInventory.hasPerm(p,
+							"stack.weapons"))
+					|| (isArmor(fromitem) && !SortInventory.hasPerm(p,
+							"stack.armor"))
+					|| (isFood(fromitem) && !SortInventory.hasPerm(p,
+							"stack.food"))
+					|| (isVehicle(fromitem) && !SortInventory.hasPerm(p,
+							"stack.vehicles"))) {
+				return;
 			}
-			
-	
+			if (SortInventory.isEnabled("Debug.SortInventory")) {
+				p.sendMessage("2) slot(" + fromslot + ">" + toslot
+						+ ") getData:(" + fromitem.getData() + ","
+						+ toitem.getData() + ") Durability: ("
+						+ fromitem.getDurability() + ","
+						+ toitem.getDurability() + ") TypeId: ("
+						+ fromitem.getTypeId() + "," + toitem.getTypeId() + ")");
+			}
 			if (fromitem.getTypeId() == toitem.getTypeId()
-				//&& fromitem.getData().equals(toitem.getData())  
-				&& fromitem.getDurability() == toitem.getDurability()) {
-				
-				if (fromitem.getData()!= null && toitem.getData()!=null) {
+					&& fromitem.getDurability() == toitem.getDurability()) {
+
+				if (fromitem.getData() != null && toitem.getData() != null) {
 					if (!fromitem.getData().equals(toitem.getData())) {
-						p.sendMessage("3) DONT MOVE! slot("+fromslot+">"+toslot+") getData:(" + fromitem.getData() + "," + toitem.getData()
-								+ ") Durability: (" + fromitem.getDurability() +"," +toitem.getDurability()
-								+ ") TypeId: ("+ fromitem.getTypeId() + "," +toitem.getTypeId()+")");			
+						p.sendMessage("3) DONT MOVE! slot(" + fromslot + ">"
+								+ toslot + ") getData:(" + fromitem.getData()
+								+ "," + toitem.getData() + ") Durability: ("
+								+ fromitem.getDurability() + ","
+								+ toitem.getDurability() + ") TypeId: ("
+								+ fromitem.getTypeId() + ","
+								+ toitem.getTypeId() + ")");
 						return;
 					}
-					
+
 				}
-				
+
 				if (total_amt > 64) {
 					to_amt = 64;
 					from_amt = total_amt - 64;

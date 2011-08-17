@@ -21,7 +21,7 @@ public abstract class SortPlayerInventory implements Player {
 						   SortInventoryCommand.isWeapon(item1) ||
 						   SortInventoryCommand.isArmor(item1) ||
 						   SortInventoryCommand.isFood(item1) ||
-						   // Food must bealone in slot 0-8 so you can eat it.
+						   // Food must be alone in slot 0-8 so you can eat it.
 						   SortInventoryCommand.isVehicle(item1)
 							          ))) {
 				continue;

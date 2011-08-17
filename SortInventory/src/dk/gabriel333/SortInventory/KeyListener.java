@@ -14,21 +14,25 @@ public class KeyListener extends InputListener {
 	public void onKeyPressedEvent(KeyPressedEvent event) {
 		SpoutPlayer sPlayer = event.getPlayer();
 		String keypressed = event.getKey().name();
-		//if isEnabled("Debug.Sort") sPlayer.sendNotification("Key pressed:", keypressed, Material.BOOK);
+		// if isEnabled("Debug.Sort") sPlayer.sendNotification("Key pressed:",
+		// keypressed, Material.BOOK);
+		sPlayer.sendMessage("EventName:" + event.getEventName() + " Type:"
+				+ event.getType() + " ScreenType:" + event.getScreenType());
+
 		String hotkey = SortInventory.config.getString("Sort.SortKey");
 		// sPlayer.sendMessage("Config Hotkey is:"+hotkey);
-		if (keypressed==null) {
-			//Messages.showError("Keypressed is null! Contact the plugindeveloper.");
+		if (keypressed == null) {
+			// Messages.showError("Keypressed is null! Contact the plugindeveloper.");
 			return;
 		}
-		if (hotkey==null) {
-			hotkey="KEY_I";
+		if (hotkey == null) {
+			hotkey = "KEY_I";
 			Messages.showError("The Sortkey is not defined in config.yml");
 			return;
 		}
 		if (hotkey.equals(keypressed)) {
-			//sPlayer.sendNotification("Key pressed:", "This is the SortKey",
-			//		Material.BOOK);
+			// sPlayer.sendNotification("Key pressed:", "This is the SortKey",
+			// Material.BOOK);
 			Block targetblock = sPlayer.getTargetBlock(null, 4);
 			if (SortInventory.isPlayer(sPlayer)) {
 				if (!SortInventory.hasPerm(sPlayer, "use")) {
