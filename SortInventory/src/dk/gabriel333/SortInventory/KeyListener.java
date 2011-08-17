@@ -22,7 +22,7 @@ public class KeyListener extends InputListener {
 			return;
 		}
 		if (keypressed==null) {
-			Messages.showError("Keypressed is null! Contact the plugindeveloper.");
+			//Messages.showError("Keypressed is null! Contact the plugindeveloper.");
 			return;
 		}
 		if (hotkey.equals(keypressed)) {
