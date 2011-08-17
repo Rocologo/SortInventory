@@ -19,9 +19,11 @@ public class KeyListener extends InputListener {
 		// sPlayer.sendMessage("Config Hotkey is:"+hotkey);
 		if (hotkey==null) {
 			Messages.showError("The Sortkey is not defined in config.yml");
+			return;
 		}
 		if (keypressed==null) {
 			Messages.showError("Keypressed is null! Contact the plugindeveloper.");
+			return;
 		}
 		if (hotkey.equals(keypressed)) {
 			//sPlayer.sendNotification("Key pressed:", "This is the SortKey",
