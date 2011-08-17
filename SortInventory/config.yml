@@ -23,7 +23,7 @@ General:
 Sort: 
     # Set the key to activate sort. 
     # Deactivate the HOTKEY by setting SortKey: KEY_DEACTIVE
-    SortKey: KEY_I 
+    SortKey: KEY_S 
 
 
 ############################################################

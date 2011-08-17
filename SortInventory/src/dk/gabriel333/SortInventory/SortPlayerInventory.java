@@ -9,7 +9,6 @@ public abstract class SortPlayerInventory implements Player {
 
 	public static void sortinventory(SpoutPlayer sPlayer) {
 		Inventory inventory = sPlayer.getInventory();
-		// int i, j, newamount;
 		int i, j;
 		for (i = 0; i < inventory.getSize(); i++) {
 			ItemStack item1 = inventory.getItem(i);
@@ -27,15 +26,6 @@ public abstract class SortPlayerInventory implements Player {
 				continue;
 			} else {
 			for (j = i + 1; j < inventory.getSize(); j++) {
-				//ItemStack item2 = inventory.getItem(j);
-				//if (i>8 && !(						 
-				//		   SortInventoryCommand.isTool(item2) ||
-				//		   SortInventoryCommand.isWeapon(item2) ||
-				//		   SortInventoryCommand.isArmor(item2) ||
-				//		   SortInventoryCommand.isFood(item2) ||
-				//		   SortInventoryCommand.isVehicle(item2)
-				//			          ))
-				 //sPlayer.sendMessage("0) Move from j="+j+" to i="+i);
 				SortInventoryCommand.moveitem(sPlayer, j, i, inventory, inventory);}
 			
 			}

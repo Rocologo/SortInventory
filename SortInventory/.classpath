@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="/My Libraries/lib/Permissions.jar"/>
 	<classpathentry kind="lib" path="/My Libraries/lib/PermissionsSql.jar"/>
 	<classpathentry kind="lib" path="/My Libraries/lib/SpoutAPI.jar"/>
+	<classpathentry kind="lib" path="/My Libraries/spoutbackpack 1.8.4/SpoutBackpack.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
