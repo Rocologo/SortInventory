@@ -29,11 +29,9 @@ public abstract class SortPlayerInventory implements Player {
 			}
 		}
 		// sort the SpoutBackpack if it exists.
+		sPlayer.sendMessage("spoutbackpack:"+SortInventory.spoutbackpack);
 		if (SortInventory.spoutbackpack) {
-			inventory = SortInventory.spoutBackpackHandler
-					.getSpoutBackpack(sPlayer);
-			// sPlayer.sendMessage("inv="+inventory);
-			// sPlayer.sendMessage("Size="+inventory.getSize());
+			inventory = SortInventory.spoutBackpackHandler.getOpenedSpoutBackpack(sPlayer);
 			i = 0;
 			j = 0;
 			for (i = 0; i < inventory.getSize(); i++) {
@@ -47,9 +45,6 @@ public abstract class SortPlayerInventory implements Player {
 					}
 				}
 			}
-
-			SortInventory.spoutBackpackHandler.setSpoutBackpack(sPlayer,inventory);
-
 		}
 	}
 }
