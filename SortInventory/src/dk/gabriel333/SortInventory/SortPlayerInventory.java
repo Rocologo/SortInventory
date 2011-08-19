@@ -29,7 +29,6 @@ public abstract class SortPlayerInventory implements Player {
 			}
 		}
 		// sort the SpoutBackpack if it exists.
-		sPlayer.sendMessage("spoutbackpack:"+SortInventory.spoutbackpack);
 		if (SortInventory.spoutbackpack) {
 			inventory = SortInventory.spoutBackpackHandler.getOpenedSpoutBackpack(sPlayer);
 			i = 0;
