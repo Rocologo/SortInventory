@@ -162,8 +162,10 @@ public class SortInventory extends JavaPlugin {
 	//}
 	
 	public static boolean isEnabled(String string) {
-
-		if (config.getString(string).toLowerCase() == "true") {
+		if (string == null) {
+        	Messages.showWarning("Config.yml is not uptodate.");
+        	return false;
+        } else if (config.getString(string).toLowerCase() == "true") {
 			return true;
 		} else {
 			return false;
