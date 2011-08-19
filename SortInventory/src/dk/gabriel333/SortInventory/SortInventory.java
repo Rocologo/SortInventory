@@ -15,6 +15,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
+import me.neatmonster.spoutbackpack.SBHandler ;
+
+
+
+
+
 public class SortInventory extends JavaPlugin {
 	public static SortInventory instance;
 	
@@ -26,9 +32,11 @@ public class SortInventory extends JavaPlugin {
 	// Hook into Permisions
 	public static PermissionHandler permission3Handler;
 
-	public static Boolean spout = false;
+	public static Boolean spout = false; 
 	public static Boolean permissions3 = false; // Permissions3 or SuperpermBridge
 	public static Boolean permissionsBukkit = false; // PermissionsBukkit
+	public static Boolean spoutbackpack = false; // is SpoutBackpack installed.
+	public static SBHandler spoutBackpackHandler;
 	
 	@Override
 	public void onEnable() {
@@ -36,6 +44,7 @@ public class SortInventory extends JavaPlugin {
 		loadConfigFile();
 		setupPermissions();
 		setupSpout();
+		setupSpoutBackpack();
 		registerEvents();
 		addCommands();
 		
@@ -59,7 +68,7 @@ public class SortInventory extends JavaPlugin {
 	}
 
 	public void addCommands() {
-		// Register our commands
+		// Register commands
 		getCommand("Sort").setExecutor(new SortInventoryCommand(this));
 	}
 
@@ -117,6 +126,24 @@ public class SortInventory extends JavaPlugin {
 			Messages.showInfo("Spout is detected.");
 		} else {
 			Messages.showError("Safety is dependend on Spout!");
+		}
+	}
+	
+	private void setupSpoutBackpack() {
+		if (spoutBackpackHandler != null) {
+			return;
+		}
+		Plugin spoutPlugin = this.getServer().getPluginManager()
+				.getPlugin("SpoutBackpack");
+		if (spoutPlugin != null) {
+			spoutbackpack=true;
+			spoutBackpackHandler = new SBHandler();
+		}
+		if (spout==true) {
+			Messages.showInfo("SpoutBackpack is detected.");
+		} else {
+			Messages.showWarning("SpoutBackpack is detected, but spout is not detected.");
+			spoutbackpack=false;
 		}
 	}
 

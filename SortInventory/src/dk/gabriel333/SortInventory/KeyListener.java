@@ -1,5 +1,7 @@
 package dk.gabriel333.SortInventory;
 
+//import me.neatmonster.spoutbackpack.SpoutBackpack;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -8,6 +10,7 @@ import org.getspout.spoutapi.event.input.InputListener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
+//import org.getspout.spout.inventory.CustomInventory;
 
 public class KeyListener extends InputListener {
 
@@ -19,7 +22,7 @@ public class KeyListener extends InputListener {
 		}
 		SpoutPlayer sPlayer = event.getPlayer();
 		ScreenType screentype = event.getScreenType();
-		String hotkey = SortInventory.config.getString("Sort.SortKey","KEY_S");
+		String hotkey = SortInventory.config.getString("Sort.SortKey", "KEY_S");
 
 		// sPlayer.sendMessage("EventName:" + event.getEventName() + " Type:"
 		// + event.getType() + " ScreenType:" + event.getScreenType());
@@ -45,6 +48,17 @@ public class KeyListener extends InputListener {
 							SortPlayerInventory.sortinventory(sPlayer);
 							Messages.sendNotification(sPlayer, "Items sorted.");
 						}
+						//SpoutBackpack.
+						// CustomInventory inv = new CustomInventory(
+						// SpoutBackpack.inventoriesSize.get(sPlayer.getName()),
+						// SpoutBackpack.inventoryName);
+						// SpoutBackpack.openedInventories.put(sPlayer.getName(),
+						// inv);
+						// if
+						// (SpoutBackpack.inventories.containsKey(sPlayer.getName()))
+						// {
+						// inv.setContents(SpoutBackpack.inventories.get(sPlayer.getName()));
+                        // }
 					}
 				}
 			}

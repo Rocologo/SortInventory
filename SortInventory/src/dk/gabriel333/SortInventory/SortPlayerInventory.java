@@ -12,24 +12,44 @@ public abstract class SortPlayerInventory implements Player {
 		int i, j;
 		for (i = 0; i < inventory.getSize(); i++) {
 			ItemStack item1 = inventory.getItem(i);
-			if ((item1.getAmount() == 64) ||
-				
-				(i < 9 && (
-						   item1.getAmount()==0 ||		 
-						   SortInventoryCommand.isTool(item1) ||
-						   SortInventoryCommand.isWeapon(item1) ||
-						   SortInventoryCommand.isArmor(item1) ||
-						   SortInventoryCommand.isFood(item1) ||
-						   // Food must be alone in slot 0-8 so you can eat it.
-						   SortInventoryCommand.isVehicle(item1)
-							          ))) {
+			if ((item1.getAmount() == 64)
+					|| (i < 9 && (item1.getAmount() == 0
+							|| SortInventoryCommand.isTool(item1)
+							|| SortInventoryCommand.isWeapon(item1)
+							|| SortInventoryCommand.isArmor(item1)
+							|| SortInventoryCommand.isFood(item1) ||
+					// Food must be alone in slot 0-8 so you can eat it.
+					SortInventoryCommand.isVehicle(item1)))) {
 				continue;
 			} else {
-			for (j = i + 1; j < inventory.getSize(); j++) {
-				SortInventoryCommand.moveitem(sPlayer, j, i, inventory, inventory);}
-			
+				for (j = i + 1; j < inventory.getSize(); j++) {
+					SortInventoryCommand.moveitem(sPlayer, j, i, inventory,
+							inventory);
+				}
 			}
 		}
-	}
+		// sort the SpoutBackpack if it exists.
+		if (SortInventory.spoutbackpack) {
+			inventory = SortInventory.spoutBackpackHandler
+					.getSpoutBackpack(sPlayer);
+			// sPlayer.sendMessage("inv="+inventory);
+			// sPlayer.sendMessage("Size="+inventory.getSize());
+			i = 0;
+			j = 0;
+			for (i = 0; i < inventory.getSize(); i++) {
+				ItemStack item1 = inventory.getItem(i);
+				if (item1.getAmount() == 64) {
+					continue;
+				} else {
+					for (j = i + 1; j < inventory.getSize(); j++) {
+						SortInventoryCommand.moveitem(sPlayer, j, i, inventory,
+								inventory);
+					}
+				}
+			}
 
+			SortInventory.spoutBackpackHandler.setSpoutBackpack(sPlayer,inventory);
+
+		}
+	}
 }
