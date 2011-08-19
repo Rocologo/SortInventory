@@ -161,16 +161,16 @@ public class SortInventory extends JavaPlugin {
 	//	}
 	//}
 	
-	public static boolean isEnabled(String string) {
-		if (string == null) {
-        	Messages.showWarning("Config.yml is not uptodate.");
-        	return false;
-        } else if (config.getString(string).toLowerCase() == "true") {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	//public static boolean isEnabled(String string) {
+	//	if (string == null) {
+    //    	Messages.showWarning("Config.yml is not uptodate.");
+    //    	return false;
+    //   } else if (config.getString(string).toLowerCase() == "true") {
+	//		return true;
+	//	} else {
+	//		return false;
+	//	}
+	//}
 
 	public static boolean hasPerm(CommandSender sender, String label) {
 

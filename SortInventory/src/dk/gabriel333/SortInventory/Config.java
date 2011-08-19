@@ -13,16 +13,34 @@ public class Config extends Configuration {
 		super(file);
 		if (file.exists()) {
 			load();
+			setHeader("#### You are missing parameters in the config.yml, make an "
+			        +"backup and delete it, when you restart the server the "
+					+"pluging will auto create an updated config.yml");
+			checkParameters("General.Language","EN");
+			checkParameters("Sort.Sort_Key","KEY_S");
+			checkParameters("Debug.Permissions","false");
+			checkParameters("Debug.SortInventory","false");
+			checkParameters("Debug.OnEnable","false");
+			checkParameters("Debug.keyboard","false");
+	        //save();
 		} else {
 			loadFileFromJar(CONFIG_FILE);
 		}
 	}
 
+
+	private void checkParameters(String key, String std) {
+		// TODO Auto-generated method stub
+        if(this.getString(key) == null) {
+           this.setProperty(key, std);
+        }
+	}
+
 	private static File loadFileFromJar(String filename) {
 		File actual = new File(SortInventory.PLUGIN_FOLDER, filename);
 		if (!actual.exists()) {
-			InputStream input = Config.class.getResourceAsStream("/"
-					+ filename);
+			InputStream input = Config.class
+					.getResourceAsStream("/" + filename);
 			if (input != null) {
 				FileOutputStream output = null;
 				try {
@@ -52,16 +70,16 @@ public class Config extends Configuration {
 		}
 		return actual;
 	}
-	
+
 	public static boolean isEnabled(String string) {
-		if (SortInventory.config.getString(string) == null) {
-			Messages.showWarning("Missing parameter in config.yml ("
-					+ string + "). Refesh config.yml. Defaulting to False");
-			return false;
-		} else if (SortInventory.config.getString(string).equalsIgnoreCase("true")) {
-			return true;
-		} else {
-			return false;
+		if (string != null) {
+			if (SortInventory.config.getString(string).equalsIgnoreCase(
+					"true")) {
+				return true;
+			} else {
+				return false;
+			}
 		}
+		return false;
 	}
 }

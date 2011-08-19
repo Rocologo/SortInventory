@@ -161,7 +161,7 @@ public class SortInventoryCommand implements CommandExecutor {
 		} else if (to_amt == 0 && from_amt > 0) {
 			to_amt = total_amt;
 			from_amt = 0;
-			if (SortInventory.isEnabled("Debug.SortInventory")) {
+			if (Config.isEnabled("Debug.SortInventory")) {
 				p.sendMessage("1) (from,to)=(" + fromslot + ">" + toslot
 						+ ") To_amt=" + to_amt + " from_amt=" + from_amt
 						+ " total_amt=" + total_amt);
@@ -187,7 +187,7 @@ public class SortInventoryCommand implements CommandExecutor {
 							"stack.vehicles"))) {
 				return;
 			}
-			if (SortInventory.isEnabled("Debug.SortInventory")) {
+			if (Config.isEnabled("Debug.SortInventory")) {
 				p.sendMessage("2) slot(" + fromslot + ">" + toslot
 						+ ") getData:(" + fromitem.getData() + ","
 						+ toitem.getData() + ") Durability: ("
@@ -215,7 +215,7 @@ public class SortInventoryCommand implements CommandExecutor {
 				if (total_amt > 64) {
 					to_amt = 64;
 					from_amt = total_amt - 64;
-					if (SortInventory.isEnabled("Debug.SortInventory")) {
+					if (Config.isEnabled("Debug.SortInventory")) {
 						p.sendMessage("4) To_amt=" + to_amt + " from_amt="
 								+ from_amt + " total_amt=" + total_amt);
 					}
@@ -224,7 +224,7 @@ public class SortInventoryCommand implements CommandExecutor {
 					return;
 				} else {
 					// total_amt is <= 64 so everything goes to toslot
-					if (SortInventory.isEnabled("Debug.SortInventory")) {
+					if (Config.isEnabled("Debug.SortInventory")) {
 						p.sendMessage("5) To_amt=" + to_amt + " from_amt="
 								+ from_amt + " total_amt=" + total_amt);
 					}
