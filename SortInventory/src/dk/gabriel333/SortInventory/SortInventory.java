@@ -42,6 +42,7 @@ public class SortInventory extends JavaPlugin {
 		setupPermissions();
 		setupSpout();
 		setupSpoutBackpack();
+		setupGUI();
 		registerEvents();
 		addCommands();
 
@@ -50,10 +51,17 @@ public class SortInventory extends JavaPlugin {
 				+ pdfFile.getVersion() + " is enabled!");
 	}
 
+	private void setupGUI() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void registerEvents() {
 		// Register our events
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.CUSTOM_EVENT, new KeyListener(),
+				Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.CUSTOM_EVENT, new SortGuiListener(), 
 				Event.Priority.Normal, this);
 	}
 
