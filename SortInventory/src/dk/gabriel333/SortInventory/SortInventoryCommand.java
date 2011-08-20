@@ -11,6 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class SortInventoryCommand implements CommandExecutor {
@@ -36,7 +37,7 @@ public class SortInventoryCommand implements CommandExecutor {
 					SortChestInventory.sortinventory(sPlayer, chest);
 					Messages.sendNotification(sPlayer, "Items sorted.");
 				} else {
-					SortPlayerInventory.sortinventory(sPlayer);
+					SortPlayerInventory.sortinventory(sPlayer,ScreenType.CHAT_SCREEN);
 					Messages.sendNotification(sPlayer, "Items sorted.");
 
 						

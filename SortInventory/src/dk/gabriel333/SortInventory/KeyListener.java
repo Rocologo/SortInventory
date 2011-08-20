@@ -27,7 +27,6 @@ public class KeyListener extends InputListener {
 		// sPlayer.sendMessage("EventName:" + event.getEventName() + " Type:"
 		// + event.getType() + " ScreenType:" + event.getScreenType());
 
-		// sPlayer.sendMessage("Config Hotkey is:"+hotkey);
 		if (screentype == ScreenType.CHEST_INVENTORY
 				|| screentype == ScreenType.PLAYER_INVENTORY) {
 			if (hotkey.equals(keypressed)) {
@@ -45,7 +44,7 @@ public class KeyListener extends InputListener {
 							SortChestInventory.sortinventory(sPlayer, chest);
 							Messages.sendNotification(sPlayer, "Items sorted.");
 						} else {
-							SortPlayerInventory.sortinventory(sPlayer);
+							SortPlayerInventory.sortinventory(sPlayer, event.getScreenType());
 							Messages.sendNotification(sPlayer, "Items sorted.");
 						}
 						//SpoutBackpack.
