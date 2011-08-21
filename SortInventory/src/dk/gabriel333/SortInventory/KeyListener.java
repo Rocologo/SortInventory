@@ -41,7 +41,7 @@ public class KeyListener extends InputListener {
 					} else {
 						if (targetblock.getType() == Material.CHEST) {
 							Chest chest = (Chest) targetblock.getState();
-							SortChestInventory.sortinventory(sPlayer, chest);
+							G333Inventory.sortinventory(sPlayer, chest);
 							G333Messages.sendNotification(sPlayer,
 									"Items sorted.");
 						} else {

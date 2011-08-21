@@ -1,6 +1,6 @@
 name: SortInventory
 main: dk.gabriel333.SortInventory.SortInventory
-version: 1.2.3
+version: 1.2.5
 author: gabriel333
 website: https://github.com/Gabriel333
 description: Use /sort to sort you personal inventory or the chest

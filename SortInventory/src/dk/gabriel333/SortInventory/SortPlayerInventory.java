@@ -17,16 +17,16 @@ public abstract class SortPlayerInventory implements Player {
 			ItemStack item1 = inventory.getItem(i);
 			if ((item1.getAmount() == 64)
 					|| (i < 9 && (item1.getAmount() == 0
-							|| SortInventoryCommand.isTool(item1)
-							|| SortInventoryCommand.isWeapon(item1)
-							|| SortInventoryCommand.isArmor(item1)
-							|| SortInventoryCommand.isFood(item1) ||
+							|| G333Inventory.isTool(item1)
+							|| G333Inventory.isWeapon(item1)
+							|| G333Inventory.isArmor(item1)
+							|| G333Inventory.isFood(item1) ||
 					// Food must be alone in slot 0-8 so you can eat it.
-					SortInventoryCommand.isVehicle(item1)))) {
+					G333Inventory.isVehicle(item1)))) {
 				continue;
 			} else {
 				for (j = i + 1; j < inventory.getSize(); j++) {
-					SortInventoryCommand.moveitem(sPlayer, j, i, inventory,
+					G333Inventory.moveitem(sPlayer, j, i, inventory,
 							inventory);
 				}
 			}
@@ -44,7 +44,7 @@ public abstract class SortPlayerInventory implements Player {
 					continue;
 				} else {
 					for (j = i + 1; j < inventory.getSize(); j++) {
-						SortInventoryCommand.moveitem(sPlayer, j, i, inventory,
+						G333Inventory.moveitem(sPlayer, j, i, inventory,
 								inventory);
 					}
 				}
