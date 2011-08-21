@@ -1,7 +1,5 @@
 package dk.gabriel333.SortInventory;
 
-import java.util.logging.Level;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,9 +12,10 @@ import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
+import dk.gabriel333.Library.*;
+
 public class SortInventoryCommand implements CommandExecutor {
 	public SortInventoryCommand(SortInventory instance) {
-
 	}
 
 	@Override
@@ -25,32 +24,31 @@ public class SortInventoryCommand implements CommandExecutor {
 		SpoutPlayer sPlayer = (SpoutPlayer) sender;
 		Block targetblock = sPlayer.getTargetBlock(null, 4);
 		if (SortInventory.isPlayer(sender)) {
-			if (!SortInventory.hasPerm(sender, "use")) {
+			if (!G333Permissions.hasPerm(sender, "use")) {
 				sender.sendMessage(ChatColor.RED
 						+ "You to dont have proper permissions for that command."
-						+ " (" + SortInventory.PLUGIN_NAME.toLowerCase()
+						+ " (" + G333Plugin.PLUGIN_NAME.toLowerCase()
 						+ ".use)");
 				return true;
 			} else {
 				if (targetblock.getType() == Material.CHEST) {
 					Chest chest = (Chest) targetblock.getState();
 					SortChestInventory.sortinventory(sPlayer, chest);
-					Messages.sendNotification(sPlayer, "Items sorted.");
+					G333Messages.sendNotification(sPlayer, "Items sorted.");
 				} else {
-					SortPlayerInventory.sortinventory(sPlayer,ScreenType.CHAT_SCREEN);
-					Messages.sendNotification(sPlayer, "Items sorted.");
-
-						
-					
+					SortPlayerInventory.sortinventory(sPlayer,
+							ScreenType.CHAT_SCREEN);
+					G333Messages.sendNotification(sPlayer, "Items sorted.");
 				}
 				return true;
 			}
 		} else {
-			Messages.l
-					.log(Level.WARNING, "You can't use /sort in the console.");
+			G333Messages.showWarning("You can't use /sort in the console.");
 			return false;
 		}
 	}
+	
+	
 
 	// Contains the list of tools
 	protected static final int tools[] = { 256, 257, 258, 269, 270, 271, 273,
@@ -64,7 +62,6 @@ public class SortInventoryCommand implements CommandExecutor {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -78,7 +75,6 @@ public class SortInventoryCommand implements CommandExecutor {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -93,7 +89,6 @@ public class SortInventoryCommand implements CommandExecutor {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -108,7 +103,6 @@ public class SortInventoryCommand implements CommandExecutor {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -122,26 +116,6 @@ public class SortInventoryCommand implements CommandExecutor {
 				return true;
 			}
 		}
-
-		return false;
-	}
-
-	// Contains the list of stackable items
-	protected static final int stackableitems[] = { 1, 3, 4, 5, 6, 7, 12, 13,
-			14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-			31, 32, 33, 35, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
-			50, 52, 53, 54, 56, 57, 58, 60, 61, 63, 64, 65, 66, 67, 68, 69, 70,
-			71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
-			88, 89, 91, 92, 93, 94, 95, 96 };
-
-	// Check if it is in the list
-	public static boolean isStackable(ItemStack item) {
-		for (int i : stackableitems) {
-			if (item.getTypeId() == i) {
-				return true;
-			}
-		}
-
 		return false;
 	}
 
@@ -155,14 +129,15 @@ public class SortInventoryCommand implements CommandExecutor {
 		to_amt = toitem.getAmount();
 		total_amt = from_amt + to_amt;
 		if ((from_amt == 0 && to_amt == 0) || from_amt == 0) {
-			// if (SortInventory.isEnabled("Debug.SortInventory")) {
-			// p.sendMessage("0) Both slot is empty: (from,to)=("+fromslot+">"+toslot+") Dont do anything");
-			// }
+			if (G333Config.g333Config.DEBUG_SORTINVENTORY) {
+				p.sendMessage("0) Both slot is empty: (from,to)=(" + fromslot
+						+ ">" + toslot + ") Dont do anything");
+			}
 			return;
 		} else if (to_amt == 0 && from_amt > 0) {
 			to_amt = total_amt;
 			from_amt = 0;
-			if (Config.isEnabled("Debug.SortInventory")) {
+			if (G333Config.g333Config.DEBUG_SORTINVENTORY) {
 				p.sendMessage("1) (from,to)=(" + fromslot + ">" + toslot
 						+ ") To_amt=" + to_amt + " from_amt=" + from_amt
 						+ " total_amt=" + total_amt);
@@ -172,23 +147,23 @@ public class SortInventoryCommand implements CommandExecutor {
 			frominventory.clear(fromslot);
 			return;
 		} else {
-			// Here is to_amt > and from_amt>0 so move all whats posible if
+			// Here is to_amt > and from_amt>0 so move all what's possible if
 			// it is the same kind of item.
-			if (SortInventory.hasPerm(p, "stack.*")) {
+			if (G333Permissions.hasPerm(p, "stack.*")) {
 				// okay...
-			} else if ((isTool(fromitem) && !SortInventory.hasPerm(p,
+			} else if ((isTool(fromitem) && !G333Permissions.hasPerm(p,
 					"stack.tools"))
-					|| (isWeapon(fromitem) && !SortInventory.hasPerm(p,
+					|| (isWeapon(fromitem) && !G333Permissions.hasPerm(p,
 							"stack.weapons"))
-					|| (isArmor(fromitem) && !SortInventory.hasPerm(p,
+					|| (isArmor(fromitem) && !G333Permissions.hasPerm(p,
 							"stack.armor"))
-					|| (isFood(fromitem) && !SortInventory.hasPerm(p,
+					|| (isFood(fromitem) && !G333Permissions.hasPerm(p,
 							"stack.food"))
-					|| (isVehicle(fromitem) && !SortInventory.hasPerm(p,
+					|| (isVehicle(fromitem) && !G333Permissions.hasPerm(p,
 							"stack.vehicles"))) {
 				return;
 			}
-			if (Config.isEnabled("Debug.SortInventory")) {
+			if (G333Config.g333Config.DEBUG_SORTINVENTORY) {
 				p.sendMessage("2) slot(" + fromslot + ">" + toslot
 						+ ") getData:(" + fromitem.getData() + ","
 						+ toitem.getData() + ") Durability: ("
@@ -201,22 +176,14 @@ public class SortInventoryCommand implements CommandExecutor {
 
 				if (fromitem.getData() != null && toitem.getData() != null) {
 					if (!fromitem.getData().equals(toitem.getData())) {
-						p.sendMessage("3) DONT MOVE! slot(" + fromslot + ">"
-								+ toslot + ") getData:(" + fromitem.getData()
-								+ "," + toitem.getData() + ") Durability: ("
-								+ fromitem.getDurability() + ","
-								+ toitem.getDurability() + ") TypeId: ("
-								+ fromitem.getTypeId() + ","
-								+ toitem.getTypeId() + ")");
+						// DONT MOVE ANYTHING
 						return;
 					}
-
 				}
-
 				if (total_amt > 64) {
 					to_amt = 64;
 					from_amt = total_amt - 64;
-					if (Config.isEnabled("Debug.SortInventory")) {
+					if (G333Config.g333Config.DEBUG_SORTINVENTORY) {
 						p.sendMessage("4) To_amt=" + to_amt + " from_amt="
 								+ from_amt + " total_amt=" + total_amt);
 					}
@@ -225,7 +192,7 @@ public class SortInventoryCommand implements CommandExecutor {
 					return;
 				} else {
 					// total_amt is <= 64 so everything goes to toslot
-					if (Config.isEnabled("Debug.SortInventory")) {
+					if (G333Config.g333Config.DEBUG_SORTINVENTORY) {
 						p.sendMessage("5) To_amt=" + to_amt + " from_amt="
 								+ from_amt + " total_amt=" + total_amt);
 					}
@@ -237,4 +204,6 @@ public class SortInventoryCommand implements CommandExecutor {
 			}
 		}
 	}
+
+
 }

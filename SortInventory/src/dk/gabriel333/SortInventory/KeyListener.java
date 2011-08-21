@@ -1,7 +1,5 @@
 package dk.gabriel333.SortInventory;
 
-//import me.neatmonster.spoutbackpack.SpoutBackpack;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -10,7 +8,9 @@ import org.getspout.spoutapi.event.input.InputListener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
-//import org.getspout.spout.inventory.CustomInventory;
+
+import dk.gabriel333.Library.*; 
+
 
 public class KeyListener extends InputListener {
 
@@ -22,7 +22,7 @@ public class KeyListener extends InputListener {
 		}
 		SpoutPlayer sPlayer = event.getPlayer();
 		ScreenType screentype = event.getScreenType();
-		String hotkey = SortInventory.config.getString("Sort.SortKey", "KEY_S");
+		String hotkey = G333Config.g333Config.LIBRARY_SORTKEY;
 
 		// sPlayer.sendMessage("EventName:" + event.getEventName() + " Type:"
 		// + event.getType() + " ScreenType:" + event.getScreenType());
@@ -32,32 +32,24 @@ public class KeyListener extends InputListener {
 			if (hotkey.equals(keypressed)) {
 				Block targetblock = sPlayer.getTargetBlock(null, 4);
 				if (SortInventory.isPlayer(sPlayer)) {
-					if (!SortInventory.hasPerm(sPlayer, "use")) {
+					if (!G333Permissions.hasPerm(sPlayer, "use")) {
 						sPlayer.sendMessage(ChatColor.RED
 								+ "You to dont have proper permissions for that command."
 								+ " ("
-								+ SortInventory.PLUGIN_NAME.toLowerCase()
+								+ G333Plugin.PLUGIN_NAME.toLowerCase()
 								+ ".use)");
 					} else {
 						if (targetblock.getType() == Material.CHEST) {
 							Chest chest = (Chest) targetblock.getState();
 							SortChestInventory.sortinventory(sPlayer, chest);
-							Messages.sendNotification(sPlayer, "Items sorted.");
+							G333Messages.sendNotification(sPlayer,
+									"Items sorted.");
 						} else {
-							SortPlayerInventory.sortinventory(sPlayer, event.getScreenType());
-							Messages.sendNotification(sPlayer, "Items sorted.");
+							SortPlayerInventory.sortinventory(sPlayer,
+									event.getScreenType());
+							G333Messages.sendNotification(sPlayer,
+									"Items sorted.");
 						}
-						//SpoutBackpack.
-						// CustomInventory inv = new CustomInventory(
-						// SpoutBackpack.inventoriesSize.get(sPlayer.getName()),
-						// SpoutBackpack.inventoryName);
-						// SpoutBackpack.openedInventories.put(sPlayer.getName(),
-						// inv);
-						// if
-						// (SpoutBackpack.inventories.containsKey(sPlayer.getName()))
-						// {
-						// inv.setContents(SpoutBackpack.inventories.get(sPlayer.getName()));
-                        // }
 					}
 				}
 			}

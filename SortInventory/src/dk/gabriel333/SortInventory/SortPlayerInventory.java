@@ -6,34 +6,10 @@ import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
+import dk.gabriel333.Library.G333Inventory;
+
 public abstract class SortPlayerInventory implements Player {
 
-/*	// this is when /sort is called from commandline
-	public static void sortinventory(SpoutPlayer sPlayer) {
-		Inventory inventory = sPlayer.getInventory();
-		int i, j;
-		for (i = 0; i < inventory.getSize(); i++) {
-			ItemStack item1 = inventory.getItem(i);
-			if ((item1.getAmount() == 64)
-					|| (i < 9 && (item1.getAmount() == 0
-							|| SortInventoryCommand.isTool(item1)
-							|| SortInventoryCommand.isWeapon(item1)
-							|| SortInventoryCommand.isArmor(item1)
-							|| SortInventoryCommand.isFood(item1) ||
-					// Food must be alone in slot 0-8 so you can eat it.
-					SortInventoryCommand.isVehicle(item1)))) {
-				continue;
-			} else {
-				for (j = i + 1; j < inventory.getSize(); j++) {
-					SortInventoryCommand.moveitem(sPlayer, j, i, inventory,
-							inventory);
-				}
-			}
-		}
-		// sort the SpoutBackpack if it exists.
-	}
-*/	
-	// this is when you have opened the inventory
 	public static void sortinventory(SpoutPlayer sPlayer, ScreenType screentype) {
 		Inventory inventory = sPlayer.getInventory();
 		int i, j;
@@ -55,14 +31,16 @@ public abstract class SortPlayerInventory implements Player {
 				}
 			}
 		}
+		
+		G333Inventory.orderItems(inventory,9);
+		
 		// sort the SpoutBackpack if it exists.
 		if (SortInventory.spoutbackpack && screentype==ScreenType.CHEST_INVENTORY) {
 			inventory = SortInventory.spoutBackpackHandler.getOpenedSpoutBackpack(sPlayer);
-			i = 0;
-			j = 0;
+			//i = 0;
+			//j = 0;
 			for (i = 0; i < inventory.getSize(); i++) {
-				ItemStack item1 = inventory.getItem(i);
-				if (item1.getAmount() == 64) {
+				if (inventory.getItem(i).getAmount() == 64) {
 					continue;
 				} else {
 					for (j = i + 1; j < inventory.getSize(); j++) {
@@ -71,6 +49,7 @@ public abstract class SortPlayerInventory implements Player {
 					}
 				}
 			}
+			G333Inventory.orderItems(inventory,0);
 		}
 	}
 }

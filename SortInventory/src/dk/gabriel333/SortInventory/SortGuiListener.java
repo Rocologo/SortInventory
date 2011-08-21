@@ -10,6 +10,7 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class SortGuiListener extends SpoutListener {
 	public void onCustomEvent(Event event) {
+		
 
 		if (event instanceof ButtonClickEvent) {
 			// We are going to need some other way to differentiate button

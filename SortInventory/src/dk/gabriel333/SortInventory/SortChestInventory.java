@@ -5,9 +5,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.block.CraftChest;
-//import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.getspout.spoutapi.player.SpoutPlayer;
+
+
+import dk.gabriel333.Library.G333Inventory;
 
 public class SortChestInventory extends CraftChest {
 
@@ -21,31 +23,31 @@ public class SortChestInventory extends CraftChest {
 		if (block.getRelative(BlockFace.EAST).getType() == Material.CHEST) {
 			nextblock = chest.getBlock().getRelative(BlockFace.EAST);
 			Chest chest2 = (Chest) nextblock.getState();
-			sortitems_doublechest(sPlayer, chest.getInventory(),
+			stackItemsDoublechest(sPlayer, chest.getInventory(),
 					chest2.getInventory());
 		} else if (block.getRelative(BlockFace.WEST).getType() == Material.CHEST) {
 			nextblock = chest.getBlock().getRelative(BlockFace.WEST);
 			Chest chest2 = (Chest) nextblock.getState();
-			sortitems_doublechest(sPlayer, chest.getInventory(),
+			stackItemsDoublechest(sPlayer, chest.getInventory(),
 					chest2.getInventory());
 
 		} else if (block.getRelative(BlockFace.NORTH).getType() == Material.CHEST) {
 			nextblock = chest.getBlock().getRelative(BlockFace.NORTH);
 			Chest chest2 = (Chest) nextblock.getState();
-			sortitems_doublechest(sPlayer, chest.getInventory(),
+			stackItemsDoublechest(sPlayer, chest.getInventory(),
 					chest2.getInventory());
 
 		} else if (block.getRelative(BlockFace.SOUTH).getType() == Material.CHEST) {
 			nextblock = chest.getBlock().getRelative(BlockFace.SOUTH);
 			Chest chest2 = (Chest) nextblock.getState();
-			sortitems_doublechest(sPlayer, chest.getInventory(),
+			stackItemsDoublechest(sPlayer, chest.getInventory(),
 					chest2.getInventory());
 		} else {
-			sortitems_singlechest(sPlayer, chest.getInventory());
+			stackItemsSinglechest(sPlayer, chest.getInventory());
 		}
 	}
 
-	private static void sortitems_doublechest(SpoutPlayer sPlayer,
+	private static void stackItemsDoublechest(SpoutPlayer sPlayer,
 			Inventory inventory1, Inventory inventory2) {
 		int i, j;
 		for (i = 0; i < inventory1.getSize(); i++) {
@@ -64,19 +66,21 @@ public class SortChestInventory extends CraftChest {
 						inventory2);
 			}
 		}
+		G333Inventory.orderItemsDoublechest(inventory1, inventory2);
 	}
 
-	private static void sortitems_singlechest(SpoutPlayer sPlayer,
-			Inventory inventory1) {
+	private static void stackItemsSinglechest(SpoutPlayer sPlayer,
+			Inventory inventory) {
 		int i, j;
-		for (i = 0; i < inventory1.getSize(); i++) {
+		for (i = 0; i < inventory.getSize(); i++) {
 
-			for (j = i + 1; j < inventory1.getSize(); j++) {
+			for (j = i + 1; j < inventory.getSize(); j++) {
 
-				SortInventoryCommand.moveitem(sPlayer, j, i, inventory1,
-						inventory1);
+				SortInventoryCommand.moveitem(sPlayer, j, i, inventory,
+						inventory);
 			}
 		}
+		G333Inventory.orderItems(inventory, 1);
 	}
 
 	

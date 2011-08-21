@@ -5,26 +5,24 @@
 # |                                                      | #
 # +------------------------------------------------------+ #
 ############################################################
+Sort: 
 
 ############################################################
 # +------------------------------------------------------+ #
 # |                        General                       | #
 # +------------------------------------------------------+ #
 ############################################################
-General:
+Library:
     # Set Language. Currently supported: EN
     Language: EN
 
-############################################################
-# +------------------------------------------------------+ #
-# |             Properties for Sort Command              | #
-# +------------------------------------------------------+ #
-############################################################
-Sort: 
     # Set the key to activate sort. 
     # Deactivate the HOTKEY by setting SortKey: KEY_DEACTIVE
     SortKey: KEY_S
-    SortSeq: [1, 2, 3, 4, 5]
+
+    # This is the sorting sequence
+    SortSEQ: WOOD_SWORD,IRON_SWORD,GOLD_SWORD,DIAMOND_SWORD,WOOD_AXE,IRON_AXE,GOLD_AXE,DIAMOND_AXE,WOOD_SPADE,IRON_SPADE,GOLD_SPADE,EGG,STONE,DIRT,WOOD,IRON_INGOT,FLINT,WOOL
+
 
 ############################################################
 # +------------------------------------------------------+ #
@@ -33,6 +31,6 @@ Sort:
 ############################################################
 Debug:
     Permissions: false
-    SortInventory: false
+    Inventory: false
     OnEnable: false
     Keyboard: false
