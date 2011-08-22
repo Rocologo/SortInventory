@@ -29,10 +29,11 @@ public class SortInventoryCommand implements CommandExecutor {
 						+ " (" + G333Plugin.PLUGIN_NAME.toLowerCase() + ".use)");
 				return true;
 			} else {
+				G333Messages.showInfo("Target is:"+targetblock.getType());
 				if (targetblock.getType() == Material.CHEST) {
 					Chest chest = (Chest) targetblock.getState();
-					G333Inventory.sortinventory(sPlayer, chest);
-					G333Messages.sendNotification(sPlayer, "Items sorted.");
+					G333Inventory.sortChestInventory(sPlayer, chest);
+					G333Messages.sendNotification(sPlayer, "Chest sorted.");
 				} else {
 					SortPlayerInventory.sortinventory(sPlayer,
 							ScreenType.CHAT_SCREEN);
