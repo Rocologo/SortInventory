@@ -26,30 +26,33 @@ public abstract class SortPlayerInventory implements Player {
 				continue;
 			} else {
 				for (j = i + 1; j < inventory.getSize(); j++) {
-					G333Inventory.moveitem(sPlayer, j, i, inventory,
-							inventory);
+					G333Inventory.moveitem(sPlayer, j, i, inventory, inventory);
 				}
 			}
 		}
-		
-		G333Inventory.orderItems(inventory,9);
-		
+
+		G333Inventory.orderItems(inventory, 9);
+
 		// sort the SpoutBackpack if it exists.
-		if (SortInventory.spoutbackpack && screentype==ScreenType.CHEST_INVENTORY) {
-			inventory = SortInventory.spoutBackpackHandler.getOpenedSpoutBackpack(sPlayer);
-			//i = 0;
-			//j = 0;
-			for (i = 0; i < inventory.getSize(); i++) {
-				if (inventory.getItem(i).getAmount() == 64) {
-					continue;
-				} else {
-					for (j = i + 1; j < inventory.getSize(); j++) {
-						G333Inventory.moveitem(sPlayer, j, i, inventory,
-								inventory);
+		if (SortInventory.spoutbackpack
+				&& screentype == ScreenType.CHEST_INVENTORY) {
+			inventory = SortInventory.spoutBackpackHandler
+					.getOpenedSpoutBackpack(sPlayer);
+			// i = 0;
+			// j = 0;
+			if (inventory != null) {
+				for (i = 0; i < inventory.getSize(); i++) {
+					if (inventory.getItem(i).getAmount() == 64) {
+						continue;
+					} else {
+						for (j = i + 1; j < inventory.getSize(); j++) {
+							G333Inventory.moveitem(sPlayer, j, i, inventory,
+									inventory);
+						}
 					}
 				}
+				G333Inventory.orderItems(inventory, 0);
 			}
-			G333Inventory.orderItems(inventory,0);
 		}
 	}
 }
