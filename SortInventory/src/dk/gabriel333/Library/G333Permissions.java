@@ -1,9 +1,10 @@
 package dk.gabriel333.Library;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
+//import Permissions 3 classes
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
@@ -103,53 +104,49 @@ public class G333Permissions {
 		// houston, we have a problems :)
 		// }
 
-		// if (sender.isOp())
+		SpoutPlayer sPlayer = (SpoutPlayer) sender;
+		// if (sender.isOp() && (sender instanceof Player)) {
+		// // OP is allowed
 		// return true;
-
-		Player p = (Player) sender;
-		if (sender.isOp() && (sender instanceof Player)) {
-			// OP is allowed
-			return true;
-		} else if (permissionsBukkit) {
-			if (p.hasPermission(PERMISSION_NODE + label)) {
-				// if (debugmode("Debug.Permissions"))
-				// p.sendMessage(ChatColor.GREEN
-				// + "PermissionsBukkit: You have permission to:"
-				// + PERMISSION_NODE + label);
+		// } else
+		if (permissionsBukkit) {
+			if (sPlayer.hasPermission( (PERMISSION_NODE + label).toLowerCase() )) {
+				return true;
 			} else {
 				// if (debugmode("Debug.Permissions"))
 				// p.sendMessage(ChatColor.BLUE
 				// + "PermissionsBukkit: You dont have permission to: "
 				// +PERMISSION_NODE + label);
+				return false;
 			}
-			return (p.hasPermission(PERMISSION_NODE + label));
-		} else if (permissions3) {
+		}
+		if (permissions3) {
 			// Permissions3 or SuperpermBridge
-			if (permission3Handler.has(p, PERMISSION_NODE + label)) {
-				// if (debugmode("Debug.Permissions"))
-				// p.sendMessage(ChatColor.GREEN
-				// + "Permissions3 You have permission to: "
-				// + PERMISSION_NODE + label);
+			if (permission3Handler.has(sPlayer, (PERMISSION_NODE + label).toLowerCase())) {
+				return true;
 			} else {
+				return false;
 				// if (debugmode("Debug.Permissions"))
 				// p.sendMessage(ChatColor.BLUE
 				// + "Permission3: You dont have permission to: "
 				// + PERMISSION_NODE + label);
 			}
-			return (permission3Handler.has(p, PERMISSION_NODE + label));
-		} else if (permissionsex) {
+			// return (permission3Handler.has(sPlayer, PERMISSION_NODE +
+			// label));
+		}
+		if (permissionsex) {
 			PermissionManager permissionsexManager = PermissionsEx
 					.getPermissionManager();
-			if (permissionsexManager.has(p, PERMISSION_NODE.toLowerCase() + label.toLowerCase())) {
-				//G333Messages.showInfo("Permission node:"+PERMISSION_NODE+label+" TRUE");
+			if (permissionsexManager.has(sPlayer, (PERMISSION_NODE
+					+ label).toLowerCase())) {
 				return true;
 			} else {
-				//G333Messages.showInfo("Permission node:"+PERMISSION_NODE+label+" FALSE");
+				// G333Messages.showInfo("Permission node:"+PERMISSION_NODE+label+" FALSE");
 				return false;
 			}
-		} else {
-			// The user had no permissions. returns false;
-			return false;
 		}
+		// The user had no permissions. 
+		return false;
+
 	}
 }
