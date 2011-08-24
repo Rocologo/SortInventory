@@ -17,14 +17,17 @@ public class G333Permissions {
 	public static String PERMISSION_NODE;
 
 	// Hook into Permissions 3.xxx
-	public static PermissionHandler permission3Handler;
+	private static Plugin permissions3Plugin;
+	private static PermissionHandler permission3Handler;
 	public static Boolean permissions3 = false; // Permissions3 or
 												// SuperpermBridge
 	// Hook into PermissionsBukkit
+	private static Plugin permissionsBukkitPlugin;
 	public static Boolean permissionsBukkit = false; // PermissionsBukkit
 														// support
 
 	// Hook into PermissionsEx
+	private static Plugin permissionsExPlugin;
 	public static Boolean permissionsex = false; // Permissionsex support
 
 	// Initialize all permissionsplugins
@@ -32,42 +35,56 @@ public class G333Permissions {
 		PERMISSION_NODE = plugin.getDescription().getName() + ".";
 		if (permissions3 || permissionsBukkit || permissionsex) {
 			G333Messages
-					.showWarning("Permissions3 or PermissionsBukkit is allready detected!");
+					.showWarning("Your permission system is allready detected!");
 			return;
 		} else {
-
-			Plugin permissions3Plugin = plugin.getServer().getPluginManager()
-					.getPlugin("Permissions");
-			Plugin permissionsBukkitPlugin = plugin.getServer()
-					.getPluginManager().getPlugin("PermissionsBukkit");
-			Plugin permissionsexPlugin = plugin.getServer().getPluginManager()
-					.getPlugin("PermissionsEx");
-			if (permissions3Plugin == null && permissionsBukkitPlugin == null
-					&& permissionsexPlugin == null) {
-				G333Messages
-						.showInfo("PermissionsBukkit/Permissions3/PermissionsEx system not detected, defaulting to OP");
-				return;
-			} else if (permissionsBukkitPlugin != null) {
-				permissionsBukkit = true;
-				G333Messages.showInfo("PermissionsBukkit is detected.");
-			} else if (permissions3Plugin != null) {
-				permission3Handler = ((Permissions) permissions3Plugin)
-						.getHandler();
-				permissions3 = true;
-				G333Messages
-						.showInfo("Permissions3/SuperpermBridge is detected. "
-								+ ((Permissions) permissions3Plugin)
-										.getDescription().getFullName());
-				if (permissionsBukkit) {
-					G333Messages
-							.showInfo("OBS. If conflict in PermissionsBukkit and Permissions3/SuperPerm, PermissionsBukkit wins over Permissions/SuperPerm");
+			int numberOfPermissionSystems = 0;
+			// PermissionsBukkit
+			if (permissionsBukkitPlugin == null) {
+				permissionsBukkitPlugin = plugin.getServer().getPluginManager()
+						.getPlugin("PermissionsBukkit");
+				if (permissionsBukkitPlugin != null) {
+					permissionsBukkit = true;
+					G333Messages.showInfo("PermissionsBukkit is detected.");
 				}
-
-			} else if (permissionsexPlugin != null) {
-				G333Messages.showInfo("PermissionsEx is detected.");
-				permissionsex = true;
+				numberOfPermissionSystems++;
 			}
-
+			// Permission3
+			if (permissions3Plugin == null) {
+				permissions3Plugin = plugin.getServer().getPluginManager()
+						.getPlugin("Permissions");
+				if (permissions3Plugin != null) {
+					permission3Handler = ((Permissions) permissions3Plugin)
+							.getHandler();
+					permissions3 = true;
+					G333Messages
+							.showInfo("Permissions3/SuperpermBridge is detected. "
+									+ ((Permissions) permissions3Plugin)
+											.getDescription().getFullName());
+				}
+				numberOfPermissionSystems++;
+			}
+			//PermissionEx
+			if (permissionsExPlugin == null) {
+				permissionsExPlugin = plugin.getServer().getPluginManager()
+						.getPlugin("PermissionsEx");
+				if (permissionsExPlugin != null) {
+					G333Messages.showInfo("PermissionsEx is detected.");
+					permissionsex = true;
+				}
+				numberOfPermissionSystems++;
+			}
+			// No permission systems found
+			if (permissions3Plugin == null && permissionsBukkitPlugin == null
+					&& permissionsExPlugin == null) {
+				G333Messages
+						.showInfo("PermissionsBukkit/Permissions3/PermissionsEx system not detected, defaulting to permissions in plugin.yml");
+				return;
+			}
+			if (numberOfPermissionSystems > 1) {
+				G333Messages
+						.showInfo("OBS. More than one permission system detected. The test sequence is: PermissionsBukkit, Permissions/PermissionsBridges, PermissionsEx");
+			}
 		}
 	}
 
@@ -90,63 +107,33 @@ public class G333Permissions {
 		// plugin,
 		// for example... iConomy would look like:
 		// if (!(MyPlugin).permissionHandler.has(player, "a.custom.node")) {
-		// return;
+		//    return;
 		// }
 		// Checking if a user belongs to a group
 		// if (!(MyPlugin).permissionHandler.inGroup(world, name, groupName)) {
-		// return;
+		//    return;
 		// }
 
 		// Permission check
 		// if(permissions.has(player, "yourplugin.permission")){
-		// yay!
+		//    yay!
 		// } else {
-		// houston, we have a problems :)
+		//    houston, we have a problems :)
 		// }
-
 		SpoutPlayer sPlayer = (SpoutPlayer) sender;
-		// if (sender.isOp() && (sender instanceof Player)) {
-		// // OP is allowed
-		// return true;
-		// } else
-		if (permissionsBukkit) {
-			if (sPlayer.hasPermission( (PERMISSION_NODE + label).toLowerCase() )) {
-				return true;
-			} else {
-				// if (debugmode("Debug.Permissions"))
-				// p.sendMessage(ChatColor.BLUE
-				// + "PermissionsBukkit: You dont have permission to: "
-				// +PERMISSION_NODE + label);
-				return false;
-			}
-		}
 		if (permissions3) {
 			// Permissions3 or SuperpermBridge
-			if (permission3Handler.has(sPlayer, (PERMISSION_NODE + label).toLowerCase())) {
-				return true;
-			} else {
-				return false;
-				// if (debugmode("Debug.Permissions"))
-				// p.sendMessage(ChatColor.BLUE
-				// + "Permission3: You dont have permission to: "
-				// + PERMISSION_NODE + label);
-			}
-			// return (permission3Handler.has(sPlayer, PERMISSION_NODE +
-			// label));
+			return permission3Handler.has(sPlayer,
+					(PERMISSION_NODE + label).toLowerCase());
 		}
 		if (permissionsex) {
 			PermissionManager permissionsexManager = PermissionsEx
 					.getPermissionManager();
-			if (permissionsexManager.has(sPlayer, (PERMISSION_NODE
-					+ label).toLowerCase())) {
-				return true;
-			} else {
-				// G333Messages.showInfo("Permission node:"+PERMISSION_NODE+label+" FALSE");
-				return false;
-			}
+			return permissionsexManager.has(sPlayer,
+					(PERMISSION_NODE + label).toLowerCase());
 		}
-		// The user had no permissions. 
-		return false;
+		// Fallback builtin Permission system / PermissionsBukkit system
+		return sPlayer.hasPermission((PERMISSION_NODE + label).toLowerCase());
 
 	}
 }

@@ -29,7 +29,7 @@ public class SortInventoryCommand implements CommandExecutor {
 						+ " (" + G333Plugin.PLUGIN_NAME.toLowerCase() + ".use)");
 				return true;
 			} else {
-				G333Messages.showInfo("Target is:"+targetblock.getType());
+				//G333Messages.showInfo("Target is:"+targetblock.getType());
 				if (targetblock.getType() == Material.CHEST) {
 					Chest chest = (Chest) targetblock.getState();
 					G333Inventory.sortChestInventory(sPlayer, chest);

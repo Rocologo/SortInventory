@@ -11,7 +11,7 @@ public class SortInventoryOpenEvent extends InventoryEvent {
 			Inventory inventory) {
 		super(event, player, inventory);
 		// TODO Auto-generated constructor stub
-	    player.sendMessage("The event is:"+event);
+	    // player.sendMessage("The event is:"+event);
 	}
 	
 }

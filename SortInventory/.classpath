@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="/My Libraries/lib/Spout.jar"/>
 	<classpathentry kind="lib" path="/My Libraries/lib/SpoutBackpack.jar"/>
 	<classpathentry kind="lib" path="/My Libraries/lib/PermissionsEx.jar"/>
+	<classpathentry kind="lib" path="/My Libraries/lib/MyWolf.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

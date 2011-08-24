@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.getspout.spoutapi.gui.GenericPopup;
 import org.getspout.spoutapi.gui.Screen;
 
+import de.Keyle.MyWolf.MyWolfPlugin;
 import dk.gabriel333.Library.G333Config;
 import dk.gabriel333.Library.G333Messages;
 import dk.gabriel333.Library.G333Plugin;
@@ -20,14 +21,19 @@ public class SortInventory extends JavaPlugin {
 	public static SortInventory instance;
 
 	public static Boolean spout = false;
-	
+
 	// Hook into SpoutBackpack
-	public static SBHandler spoutBackpackHandler; //The Backpack inventoryHandler
+	public static SBHandler spoutBackpackHandler; // The Backpack
+													// inventoryHandler
 	public static Boolean spoutbackpack = false; // is SpoutBackpack installed.
+
+	// Hook into MyWolf
+	public static Boolean mywolf = false;
+	public static MyWolfPlugin myWolfPlugin;
 
 	// GUI
 	public Screen sortScreen = new GenericPopup();
-	
+
 	@Override
 	public void onEnable() {
 		instance = this;
@@ -36,6 +42,7 @@ public class SortInventory extends JavaPlugin {
 		G333Config.setupConfig(this);
 		setupSpout();
 		setupSpoutBackpack();
+		setupMyWolf();
 		setupGUI();
 		registerEvents();
 		addCommands();
@@ -44,10 +51,10 @@ public class SortInventory extends JavaPlugin {
 		G333Messages.showInfo(pdfFile.getName() + " version "
 				+ pdfFile.getVersion() + " is enabled!");
 	}
-	    
+
 	private void setupGUI() {
 		// TODO Auto-generated method stub
-		//sortScreen=sPlayer.getMainScreen();
+		// sortScreen=sPlayer.getMainScreen();
 	}
 
 	public void registerEvents() {
@@ -55,11 +62,11 @@ public class SortInventory extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.CUSTOM_EVENT, new KeyListener(),
 				Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.CUSTOM_EVENT, new SortGuiListener(), 
+		pm.registerEvent(Event.Type.CUSTOM_EVENT, new SortGuiListener(),
 				Event.Priority.Normal, this);
-		//pm.registerEvent(Event.Type.CUSTOM_EVENT, new SortInventoryListener(), 
-		//	Event.Priority.Normal, this);
-		
+		pm.registerEvent(Event.Type.CUSTOM_EVENT, new SortInventoryListener(),
+				Event.Priority.Normal, this);
+
 	}
 
 	@Override
@@ -74,8 +81,6 @@ public class SortInventory extends JavaPlugin {
 		getCommand("Sort").setExecutor(new SortInventoryCommand(this));
 	}
 
-
-
 	private void setupSpout() {
 		Plugin spoutPlugin = this.getServer().getPluginManager()
 				.getPlugin("Spout");
@@ -88,23 +93,43 @@ public class SortInventory extends JavaPlugin {
 	}
 
 	private void setupSpoutBackpack() {
-		if (spoutBackpackHandler != null) {
-			return;
+		if (spoutBackpackHandler == null) {
+			Plugin spoutBackpackPlugin = this.getServer().getPluginManager()
+					.getPlugin("SpoutBackpack");
+			if (spoutBackpackPlugin != null) {
+				if (spout == true) {
+					spoutBackpackHandler = new SBHandler();
+					spoutbackpack = true;
+					G333Messages.showInfo("SpoutBackpack is detected.");
+				} else {
+					G333Messages
+							.showWarning("SpoutBackpack is detected, but spout is not detected.");
+					spoutbackpack = false;
+				}
+			}
 		}
-		Plugin spoutBackpackPlugin = this.getServer().getPluginManager()
-				.getPlugin("SpoutBackpack");
-		if (spoutBackpackPlugin == null) {
-			return;
+	}
+
+	private void setupMyWolf() {
+		if (myWolfPlugin == null) {
+			myWolfPlugin = (MyWolfPlugin) this.getServer().getPluginManager()
+					.getPlugin("MyWolf");
+			if (myWolfPlugin != null) {
+				if (spout == true) {
+					mywolf = true;
+					G333Messages.showInfo("MyWolf is detected.");
+				} else {
+					G333Messages
+							.showWarning("MyWolf is detected, but spout is not detected.");
+					mywolf = false;
+				}
+
+			}
+
 		}
-		spoutBackpackHandler = new SBHandler();
-		spoutbackpack = true;
-		if (spout == true) {
-			G333Messages.showInfo("SpoutBackpack is detected.");
-		} else {
-			G333Messages.showWarning("SpoutBackpack is detected, but spout is not detected.");
-			spoutbackpack = false;
-		}
-		return;
+
+		// you get access to MyWolf inventory with:
+		// CustomMCInventory inv = myWolfPlugin.getMyWolf(sPlayer).inv;
 	}
 
 	public static boolean isPlayer(CommandSender sender) {

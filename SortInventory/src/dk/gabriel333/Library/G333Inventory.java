@@ -14,6 +14,7 @@ public class G333Inventory {
 	public static void sortChestInventory(SpoutPlayer sPlayer, Chest chest) {
 		Block block = chest.getBlock();
 		Block nextblock = null;
+		// USE this http://getspout.org/jd/org/getspout/spoutapi/block/SpoutChest.html
 		CustomInventory doublechestInventory = new CustomInventory(54,
 				"SortInventory");
 		if (block.getRelative(BlockFace.EAST).getType() == Material.CHEST) {
@@ -24,7 +25,7 @@ public class G333Inventory {
 			orderCustomInventoryItems(doublechestInventory);
 			splitDoublechestInventory(doublechestInventory,
 					chest, chest2);
-			G333Messages.showInfo("END of EAST");
+			// G333Messages.showInfo("END of EAST");
 		} else if (block.getRelative(BlockFace.WEST).getType() == Material.CHEST) {
 			nextblock = chest.getBlock().getRelative(BlockFace.WEST);
 			Chest chest2 = (Chest) nextblock.getState();
@@ -33,16 +34,16 @@ public class G333Inventory {
 			orderCustomInventoryItems(doublechestInventory);
 			splitDoublechestInventory(doublechestInventory,
 					chest, chest2);
-			G333Messages.showInfo("END of WEST");
+			// G333Messages.showInfo("END of WEST");
 		} else if (block.getRelative(BlockFace.NORTH).getType() == Material.CHEST) {
 			nextblock = chest.getBlock().getRelative(BlockFace.NORTH);
 			Chest chest2 = (Chest) nextblock.getState();
-			doublechestInventory = getDoublechestInventory(chest, chest2);
+			doublechestInventory = getDoublechestInventory(chest2, chest);
 			stackCustomInventoryItems(sPlayer, doublechestInventory);
 			orderCustomInventoryItems(doublechestInventory);
 			splitDoublechestInventory(doublechestInventory,
 					chest, chest2);
-			G333Messages.showInfo("END of NORTH");
+			// G333Messages.showInfo("END of NORTH");
 		} else if (block.getRelative(BlockFace.SOUTH).getType() == Material.CHEST) {
 			nextblock = chest.getBlock().getRelative(BlockFace.SOUTH);
 			Chest chest2 = (Chest) nextblock.getState();
@@ -51,7 +52,7 @@ public class G333Inventory {
 			orderCustomInventoryItems(doublechestInventory);
 			splitDoublechestInventory(doublechestInventory,
 					chest, chest2);
-			G333Messages.showInfo("END of SOUTH");
+			// G333Messages.showInfo("END of SOUTH");
 		} else {
 			stackInventoryItems(sPlayer, chest.getInventory());
 			orderInventoryItems(chest.getInventory(), 0);
