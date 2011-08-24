@@ -1,64 +1,77 @@
 package dk.gabriel333.Library;
 
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
+//import org.bukkit.block.BlockFace;
+//import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.getspout.spout.inventory.CustomInventory;
+//import org.getspout.spout.inventory.CustomInventory;
+import org.getspout.spoutapi.block.SpoutChest;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class G333Inventory {
 
-	public static void sortChestInventory(SpoutPlayer sPlayer, Chest chest) {
-		Block block = chest.getBlock();
-		Block nextblock = null;
-		// USE this http://getspout.org/jd/org/getspout/spoutapi/block/SpoutChest.html
-		CustomInventory doublechestInventory = new CustomInventory(54,
-				"SortInventory");
-		if (block.getRelative(BlockFace.EAST).getType() == Material.CHEST) {
-			nextblock = chest.getBlock().getRelative(BlockFace.EAST);
-			Chest chest2 = (Chest) nextblock.getState();
-			doublechestInventory = getDoublechestInventory(chest2, chest);
-			stackCustomInventoryItems(sPlayer, doublechestInventory);
-			orderCustomInventoryItems(doublechestInventory);
-			splitDoublechestInventory(doublechestInventory,
-					chest, chest2);
-			// G333Messages.showInfo("END of EAST");
-		} else if (block.getRelative(BlockFace.WEST).getType() == Material.CHEST) {
-			nextblock = chest.getBlock().getRelative(BlockFace.WEST);
-			Chest chest2 = (Chest) nextblock.getState();
-			doublechestInventory = getDoublechestInventory(chest, chest2);
-			stackCustomInventoryItems(sPlayer, doublechestInventory);
-			orderCustomInventoryItems(doublechestInventory);
-			splitDoublechestInventory(doublechestInventory,
-					chest, chest2);
-			// G333Messages.showInfo("END of WEST");
-		} else if (block.getRelative(BlockFace.NORTH).getType() == Material.CHEST) {
-			nextblock = chest.getBlock().getRelative(BlockFace.NORTH);
-			Chest chest2 = (Chest) nextblock.getState();
-			doublechestInventory = getDoublechestInventory(chest2, chest);
-			stackCustomInventoryItems(sPlayer, doublechestInventory);
-			orderCustomInventoryItems(doublechestInventory);
-			splitDoublechestInventory(doublechestInventory,
-					chest, chest2);
-			// G333Messages.showInfo("END of NORTH");
-		} else if (block.getRelative(BlockFace.SOUTH).getType() == Material.CHEST) {
-			nextblock = chest.getBlock().getRelative(BlockFace.SOUTH);
-			Chest chest2 = (Chest) nextblock.getState();
-			doublechestInventory = getDoublechestInventory(chest, chest2);
-			stackCustomInventoryItems(sPlayer, doublechestInventory);
-			orderCustomInventoryItems(doublechestInventory);
-			splitDoublechestInventory(doublechestInventory,
-					chest, chest2);
-			// G333Messages.showInfo("END of SOUTH");
-		} else {
-			stackInventoryItems(sPlayer, chest.getInventory());
-			orderInventoryItems(chest.getInventory(), 0);
+	public static void sortChestInventory(SpoutPlayer sPlayer, SpoutChest sChest) {
+		
+		//G333Messages.showInfo("InventorySize:"+sChest.getLargestInventory().getSize());
+		stackInventoryItems(sPlayer, sChest.getLargestInventory());
+		orderInventoryItems( sChest.getLargestInventory(), 0);
+		
+	}
+/*	
+	@SuppressWarnings("unused")
+	private static void stackCustomInventoryItems(SpoutPlayer sPlayer,
+			CustomInventory custominventory) {
+		int i, j;
+		for (i = 0; i < custominventory.getSize(); i++) {
+			for (j = i + 1; j < custominventory.getSize(); j++) {
+				moveitemCustomInventory(sPlayer, j, i, custominventory);
+			}
 		}
 	}
-
+*/
+	/*
+	 * public static void sortChestInventory(SpoutPlayer sPlayer, Chest chest) {
+	 * Block block = chest.getBlock(); Block nextblock = null; // USE this
+	 * http://getspout.org/jd/org/getspout/spoutapi/block/SpoutChest.html
+	 * CustomInventory doublechestInventory = new CustomInventory(54,
+	 * "SortInventory"); if (block.getRelative(BlockFace.EAST).getType() ==
+	 * Material.CHEST) { nextblock =
+	 * chest.getBlock().getRelative(BlockFace.EAST); Chest chest2 = (Chest)
+	 * nextblock.getState(); doublechestInventory =
+	 * getDoublechestInventory(chest2, chest);
+	 * stackCustomInventoryItems(sPlayer, doublechestInventory);
+	 * orderCustomInventoryItems(doublechestInventory);
+	 * splitDoublechestInventory(doublechestInventory, chest, chest2); //
+	 * G333Messages.showInfo("END of EAST"); } else if
+	 * (block.getRelative(BlockFace.WEST).getType() == Material.CHEST) {
+	 * nextblock = chest.getBlock().getRelative(BlockFace.WEST); Chest chest2 =
+	 * (Chest) nextblock.getState(); doublechestInventory =
+	 * getDoublechestInventory(chest, chest2);
+	 * stackCustomInventoryItems(sPlayer, doublechestInventory);
+	 * orderCustomInventoryItems(doublechestInventory);
+	 * splitDoublechestInventory(doublechestInventory, chest, chest2); //
+	 * G333Messages.showInfo("END of WEST"); } else if
+	 * (block.getRelative(BlockFace.NORTH).getType() == Material.CHEST) {
+	 * nextblock = chest.getBlock().getRelative(BlockFace.NORTH); Chest chest2 =
+	 * (Chest) nextblock.getState(); doublechestInventory =
+	 * getDoublechestInventory(chest2, chest);
+	 * stackCustomInventoryItems(sPlayer, doublechestInventory);
+	 * orderCustomInventoryItems(doublechestInventory);
+	 * splitDoublechestInventory(doublechestInventory, chest, chest2); //
+	 * G333Messages.showInfo("END of NORTH"); } else if
+	 * (block.getRelative(BlockFace.SOUTH).getType() == Material.CHEST) {
+	 * nextblock = chest.getBlock().getRelative(BlockFace.SOUTH); Chest chest2 =
+	 * (Chest) nextblock.getState(); doublechestInventory =
+	 * getDoublechestInventory(chest, chest2);
+	 * stackCustomInventoryItems(sPlayer, doublechestInventory);
+	 * orderCustomInventoryItems(doublechestInventory);
+	 * splitDoublechestInventory(doublechestInventory, chest, chest2); //
+	 * G333Messages.showInfo("END of SOUTH"); } else {
+	 * stackInventoryItems(sPlayer, chest.getInventory());
+	 * orderInventoryItems(chest.getInventory(), 0); } }
+	 */
+	/*
 	public static CustomInventory getDoublechestInventory(Chest chest1,
 			Chest chest2) {
 		CustomInventory custominventory = new CustomInventory(54,
@@ -69,19 +82,10 @@ public class G333Inventory {
 		}
 		return custominventory;
 	}
+*/
 
-	private static void stackCustomInventoryItems(SpoutPlayer sPlayer,
-			CustomInventory custominventory) {
-		int i, j;
-		for (i = 0; i < custominventory.getSize(); i++) {
-			for (j = i + 1; j < custominventory.getSize(); j++) {
-				moveitemCustomInventory(sPlayer, j, i, custominventory);
-			}
-		}
-	}
-
-	public static void orderCustomInventoryItems(
-			CustomInventory custominventory) {
+/*
+	public static void orderCustomInventoryItems(CustomInventory custominventory) {
 		int n = 0;
 		for (int m = 0; m < G333Config.g333Config.SORTSEQ.length; m++) {
 			Material mat = Material
@@ -110,14 +114,18 @@ public class G333Inventory {
 			}
 		}
 	}
-
+*/
+	/*
+	  
+	 
 	private static void switchCustomInventoryItems(
 			CustomInventory custominventory, int slot1, int slot2) {
 		ItemStack item = custominventory.getItem(slot1);
 		custominventory.setItem(slot1, custominventory.getItem(slot2));
 		custominventory.setItem(slot2, item);
 	}
-
+	*/
+/*
 	public static void moveitemCustomInventory(SpoutPlayer p, int fromslot,
 			int toslot, CustomInventory custominventory) {
 
@@ -197,22 +205,7 @@ public class G333Inventory {
 		}
 	}
 
-	public static void splitDoublechestInventory(
-			CustomInventory custominventory, Chest chest1, Chest chest2) {
-		for (int i = 0; i < 27; i++) {
-			if (custominventory.getItem(i).getAmount() != 0) {
-				chest1.getInventory().setItem(i, custominventory.getItem(i));
-			} else {
-				chest1.getInventory().clear(i);
-			}
-			if (custominventory.getItem(i + 27).getAmount() != 0) {
-				chest2.getInventory().setItem(i, custominventory.getItem(i + 27));
-			} else {
-				chest2.getInventory().clear(i);
-			}
-		}
-
-	}
+*/
 
 	// ********************************************************************
 	// ********************************************************************
@@ -223,6 +216,7 @@ public class G333Inventory {
 	private static void stackInventoryItems(SpoutPlayer sPlayer,
 			Inventory inventory) {
 		int i, j;
+		//G333Messages.showInfo("stackInventoryItems, size is:"+inventory.getSize());
 		for (i = 0; i < inventory.getSize(); i++) {
 			for (j = i + 1; j < inventory.getSize(); j++) {
 				moveitemInventory(sPlayer, j, i, inventory);
@@ -417,7 +411,17 @@ public class G333Inventory {
 		return false;
 	}
 
-	public Boolean isDoublechest(Chest chest) {
+
+
+	// ********************************************************************
+	// ********************************************************************
+	// *****************UNUSED*********************************************
+	// ********************************************************************
+	// ********************************************************************
+
+
+/*
+	public Boolean isDoublechestXXX(Chest chest) {
 		if (chest.getBlock().getRelative(BlockFace.EAST).getType() == Material.CHEST) {
 			return true;
 		} else if (chest.getBlock().getRelative(BlockFace.WEST).getType() == Material.CHEST) {
@@ -432,11 +436,22 @@ public class G333Inventory {
 			return false;
 		}
 	}
+	
+	public static void splitDoublechestInventory(
+			CustomInventory custominventory, Chest chest1, Chest chest2) {
+		for (int i = 0; i < 27; i++) {
+			if (custominventory.getItem(i).getAmount() != 0) {
+				chest1.getInventory().setItem(i, custominventory.getItem(i));
+			} else {
+				chest1.getInventory().clear(i);
+			}
+			if (custominventory.getItem(i + 27).getAmount() != 0) {
+				chest2.getInventory().setItem(i,
+						custominventory.getItem(i + 27));
+			} else {
+				chest2.getInventory().clear(i);
+			}
+		}
 
-	// ********************************************************************
-	// ********************************************************************
-	// *****************UNUSED*********************************************
-	// ********************************************************************
-	// ********************************************************************
-
+	}*/
 }

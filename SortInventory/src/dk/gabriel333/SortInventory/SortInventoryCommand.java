@@ -3,11 +3,12 @@ package dk.gabriel333.SortInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import org.getspout.spoutapi.block.SpoutChest;
 import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
@@ -29,10 +30,10 @@ public class SortInventoryCommand implements CommandExecutor {
 						+ " (" + G333Plugin.PLUGIN_NAME.toLowerCase() + ".use)");
 				return true;
 			} else {
-				//G333Messages.showInfo("Target is:"+targetblock.getType());
+				// G333Messages.showInfo("Target is:"+targetblock.getType());
 				if (targetblock.getType() == Material.CHEST) {
-					Chest chest = (Chest) targetblock.getState();
-					G333Inventory.sortChestInventory(sPlayer, chest);
+					SpoutChest sChest = (SpoutChest) targetblock.getState();
+					G333Inventory.sortChestInventory(sPlayer, sChest);
 					G333Messages.sendNotification(sPlayer, "Chest sorted.");
 				} else {
 					SortPlayerInventory.sortinventory(sPlayer,

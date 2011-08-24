@@ -3,19 +3,17 @@ package dk.gabriel333.SortInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-//import org.getspout.spout.inventory.CustomMCInventory;
 import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 //import de.Keyle.MyWolf.MyWolfPlugin;
 import dk.gabriel333.Library.G333Inventory;
-import dk.gabriel333.Library.G333Messages;
+//import dk.gabriel333.Library.G333Messages;
 
 public abstract class SortPlayerInventory implements Player {
 
 	public static void sortinventory(SpoutPlayer sPlayer, ScreenType screentype) {
 		Inventory inventory = sPlayer.getInventory();
-		//CustomMCInventory myWolfInventory;
 		int i, j;
 		for (i = 0; i < inventory.getSize(); i++) {
 			ItemStack item1 = inventory.getItem(i);
@@ -73,7 +71,7 @@ public abstract class SortPlayerInventory implements Player {
 				//		+ myWolfInventory.getName());
 
 				// sorting myWolfInventry
-				G333Messages.showInfo("Sorting MyWolfInventory... to be done");
+				//G333Messages.showInfo("Sorting MyWolfInventory... to be done");
 				//for (i = 0; i < myWolfInventory.getSize(); i++) {
 				//	for (j = i + 1; j < myWolfInventory.getSize(); j++) {
 				//		G333Inventory.moveitemInventory(sPlayer, j, i,

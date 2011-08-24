@@ -3,7 +3,7 @@ package dk.gabriel333.SortInventory;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
+import org.getspout.spoutapi.block.SpoutChest;
 import org.getspout.spoutapi.event.input.InputListener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.gui.ScreenType;
@@ -40,8 +40,8 @@ public class KeyListener extends InputListener {
 								+ ".use)");
 					} else {
 						if (targetblock.getType() == Material.CHEST) {
-							Chest chest = (Chest) targetblock.getState();
-							G333Inventory.sortChestInventory(sPlayer, chest);
+							SpoutChest sChest = (SpoutChest) targetblock.getState();
+							G333Inventory.sortChestInventory(sPlayer, sChest);
 							G333Messages.sendNotification(sPlayer,
 									"Chest sorted.");
 						} else {
