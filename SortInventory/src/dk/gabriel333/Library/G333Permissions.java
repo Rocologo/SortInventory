@@ -1,5 +1,6 @@
 package dk.gabriel333.Library;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.player.SpoutPlayer;
@@ -15,6 +16,9 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 public class G333Permissions {
 
 	public static String PERMISSION_NODE;
+	public final static Boolean QUIET = true;
+	public final static Boolean NOT_QUIET = false;
+	
 
 	// Hook into Permissions 3.xxx
 	private static Plugin permissions3Plugin;
@@ -89,7 +93,7 @@ public class G333Permissions {
 	}
 
 	// Test if the player has permissions to do the action
-	public static boolean hasPerm(CommandSender sender, String label) {
+	public static boolean hasPerm(CommandSender sender, String label, Boolean quiet) {
 
 		// How to hook into PermissionsBukkit
 		// Basic Permission Check
@@ -121,19 +125,32 @@ public class G333Permissions {
 		//    houston, we have a problems :)
 		// }
 		SpoutPlayer sPlayer = (SpoutPlayer) sender;
-		if (permissions3) {
+		Boolean hasPermission = false;
+		
+		// Fallback builtin Permission system / PermissionsBukkit system
+		if (sPlayer.hasPermission((PERMISSION_NODE + label).toLowerCase())) {
+			hasPermission=true;
+		} else if (permissions3) {
 			// Permissions3 or SuperpermBridge
-			return permission3Handler.has(sPlayer,
+			hasPermission=permission3Handler.has(sPlayer,
 					(PERMISSION_NODE + label).toLowerCase());
-		}
-		if (permissionsex) {
+		} else if (permissionsex) {
+			// PermissionsEx
 			PermissionManager permissionsexManager = PermissionsEx
 					.getPermissionManager();
-			return permissionsexManager.has(sPlayer,
+			hasPermission = permissionsexManager.has(sPlayer,
 					(PERMISSION_NODE + label).toLowerCase());
 		}
-		// Fallback builtin Permission system / PermissionsBukkit system
-		return sPlayer.hasPermission((PERMISSION_NODE + label).toLowerCase());
-
+		
+		// return permission 
+		if (hasPermission) {
+			return true;
+		} else if (NOT_QUIET) {
+			sPlayer.sendMessage(ChatColor.RED
+					+ "You to dont have permission to do this."
+					+ " (" + G333Plugin.PLUGIN_NAME.toLowerCase()
+					+ "."+label.toLowerCase()+")");
+		} 
+		return false;
 	}
 }

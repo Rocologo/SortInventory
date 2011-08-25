@@ -19,6 +19,7 @@ Library:
     # Set the key to activate sort. 
     # Deactivate the HOTKEY by setting SortKey: KEY_DEACTIVE
     SortKey: KEY_S
+    MenuKey: KEY_M
 
     # This is the sorting sequence
     # Be VERY carefull when you enter new items, be sure you 
@@ -31,6 +32,24 @@ Library:
 
 ############################################################
 # +------------------------------------------------------+ #
+# |                  Properties for SQL                  | #
+# +------------------------------------------------------+ #
+############################################################
+Storage:
+    # Storage supports [MYSQL|SQLITE]
+    Type: SQLITE
+
+    # MySQL Settings - Will only be used if Storage: is set
+    # to MYSQL
+    # mysql: true
+    Host: localhost
+    Username: root
+    Password: Changethis
+    Database: SortInventory
+
+
+############################################################
+# +------------------------------------------------------+ #
 # |                  Properties for Debug                | #
 # +------------------------------------------------------+ #
 ############################################################
@@ -39,3 +58,4 @@ Debug:
     Inventory: false
     OnEnable: false
     Keyboard: false
+    SQL: false
