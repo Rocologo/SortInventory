@@ -101,7 +101,6 @@ public class SortInventoryMenu {
 		popup.setTransparent(false); 
 		
 		sPlayer.getMainScreen().attachPopupScreen(popup);
-		// dette lukker inventory :-(
 		
         //GenericLabel rankLabel = null;
         //UUID rankLabelId = (UUID) getRankLabels().get(player.getName());
@@ -118,13 +117,7 @@ public class SortInventoryMenu {
 		menuButtons.add(sortButton);
 		sortInventoryMenuButtons.put(sortButton.getId(), "Sort");	
 
-		
-		//button.setHexColor(hex)
-		//button.setHoverColor(hexColor)
-		//button.setColor(hexColor)
-		//button.setVisible(true);
-		
-				//sPlayer.getMainScreen().setDirty(true);
+
 		
 	}
 

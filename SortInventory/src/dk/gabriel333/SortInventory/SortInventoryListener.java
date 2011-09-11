@@ -18,9 +18,8 @@ public class SortInventoryListener extends InventoryListener {
 
 	public void onInventoryOpen(InventoryOpenEvent event) {
 		SpoutPlayer sPlayer = (SpoutPlayer) event.getPlayer();
-		G333Messages.sendNotification(sPlayer,
-				G333Config.g333Config.LIBRARY_SORTKEY + ":Sort "
-						+ G333Config.g333Config.LIBRARY_SORTKEY + ":Menu");
+		G333Messages.sendNotification(sPlayer,"Press "+
+				G333Config.g333Config.LIBRARY_SORTKEY + " to sort");
 	}
 
 	public void onInventoryClose(InventoryCloseEvent event) {

@@ -1,8 +1,5 @@
 package dk.gabriel333.SortInventory;
 
-import java.net.MalformedURLException;
-import java.util.logging.Logger;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -10,9 +7,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.alta189.sqlLibrary.MySQL.mysqlCore;
-import com.alta189.sqlLibrary.SQLite.sqlCore;
 
 import de.Keyle.MyWolf.MyWolfPlugin;
 import dk.gabriel333.Library.G333Config;
@@ -34,14 +28,9 @@ public class SortInventory extends JavaPlugin {
 	// Hook into MyWolf
 	public static Boolean mywolf = false;
 	public static MyWolfPlugin myWolfPlugin;
-	
-	// SQLITE-MYSQL settings
-		public mysqlCore manageMySQL; // MySQL handler
-		public sqlCore manageSQLite; // SQLite handler
-		public Logger log = Logger.getLogger("Minecraft");
 
 	// GUI
-	//public Screen sortScreen = new GenericPopup();
+	// public Screen sortScreen = new GenericPopup();
 
 	@Override
 	public void onEnable() {
@@ -50,74 +39,16 @@ public class SortInventory extends JavaPlugin {
 		G333Plugin.setupPlugin(this);
 		G333Config.setupConfig(this);
 		setupSpout();
-		setupSQL();
 		setupSpoutBackpack();
 		setupMyWolf();
 		setupGUI();
 		registerEvents();
 		addCommands();
-
+		G333Messages.showWarning("SortInventory is Outdated.");
+		G333Messages.showWarning("SortInventory should be replaced by BukkitInventoryTools");
 		PluginDescriptionFile pdfFile = this.getDescription();
 		G333Messages.showInfo(pdfFile.getName() + " version "
 				+ pdfFile.getVersion() + " is enabled!");
-	}
-	
-	private void setupSQL() {
-
-		if (G333Config.g333Config.DEBUG_SQL) {
-			G333Messages.showInfo("Storagetype:" + G333Config.g333Config.STORAGE_TYPE);
-		}
-
-		if (G333Config.g333Config.STORAGE_TYPE.equals("MySQL")) {
-			// Declare MySQL Handler
-			this.manageMySQL = new mysqlCore(log, "["+G333Plugin.PLUGIN_NAME+"]", G333Config.g333Config.STORAGE_HOST,
-					G333Config.g333Config.STORAGE_DATABASE, G333Config.g333Config.STORAGE_USERNAME, G333Config.g333Config.STORAGE_PASSWORD);
-			G333Messages.showInfo("MySQL Initializing");
-			// Initialize MySQL Handler
-			this.manageMySQL.initialize();
-			try {
-				if (this.manageMySQL.checkConnection()) {
-					// Check if the Connection was successful
-					G333Messages.showInfo("MySQL connection successful");
-					if (!this.manageMySQL.checkTable("SORTINVENTORY")) {
-						// Check if the table exists in the database if not
-						// create it
-						G333Messages
-								.showInfo("Creating table SORTINVENTORY");
-						String query = "CREATE TABLE SORTINVENTORY (id INT AUTO_INCREMENT PRIMARY_KEY, PINCODE VARCHAR(4), OWNER VARCHAR(255), CLOSETIMER INT, X INT, Y INT, Z INT);";
-						this.manageMySQL.createTable(query);
-						// Use mysqlCore.createTable(query) to create tables
-					}
-				} else {
-					G333Messages.showError("MySQL connection failed");
-					G333Config.g333Config.STORAGE_HOST = "SQLITE";
-				}
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			// SQLite
-			G333Messages.showInfo("SQLite Initializing");
-			// Declare SQLite handler
-			manageSQLite = new sqlCore(log, "["+G333Plugin.PLUGIN_NAME+"]", G333Plugin.PLUGIN_NAME,
-					G333Plugin.PLUGIN_FOLDER);
-			// Initialize SQLite handler
-			manageSQLite.initialize();
-			// Check if the table exists, if it doesn't create it
-			if (!manageSQLite.checkTable("SORTINVENTORY")) {
-				G333Messages.showInfo("Creating table SortInventory");
-				String query = "CREATE TABLE SORTINVENTORY (id INT AUTO_INCREMENT PRIMARY_KEY, PINCODE VARCHAR(4), OWNER VARCHAR(255), CLOSETIMER INT, X INT, Y INT, Z INT);";
-				manageSQLite.createTable(query);
-				// Use sqlCore.createTable(query) to create tables
-			}
-		}
 	}
 
 	private void setupGUI() {
@@ -130,10 +61,10 @@ public class SortInventory extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Event.Type.CUSTOM_EVENT, new KeyListener(),
 				Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.CUSTOM_EVENT, new SortInventoryMenuListener(),
-				Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.CUSTOM_EVENT, new SortInventoryListener(this),
-				Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.CUSTOM_EVENT,
+				new SortInventoryMenuListener(), Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.CUSTOM_EVENT, new SortInventoryListener(
+				this), Event.Priority.Normal, this);
 
 	}
 

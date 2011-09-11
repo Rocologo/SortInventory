@@ -32,24 +32,6 @@ Library:
 
 ############################################################
 # +------------------------------------------------------+ #
-# |                  Properties for SQL                  | #
-# +------------------------------------------------------+ #
-############################################################
-Storage:
-    # Storage supports [MYSQL|SQLITE]
-    Type: SQLITE
-
-    # MySQL Settings - Will only be used if Storage: is set
-    # to MYSQL
-    # mysql: true
-    Host: localhost
-    Username: root
-    Password: Changethis
-    Database: SortInventory
-
-
-############################################################
-# +------------------------------------------------------+ #
 # |                  Properties for Debug                | #
 # +------------------------------------------------------+ #
 ############################################################
@@ -58,4 +40,4 @@ Debug:
     Inventory: false
     OnEnable: false
     Keyboard: false
-    SQL: false
+

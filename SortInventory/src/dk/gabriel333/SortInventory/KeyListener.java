@@ -22,11 +22,6 @@ public class KeyListener extends InputListener {
 		}
 		SpoutPlayer sPlayer = event.getPlayer();
 		ScreenType screentype = event.getScreenType();
-		//sPlayer.sendMessage("Keypressed:" + keypressed + "SK:"
-		//		+ G333Config.g333Config.LIBRARY_SORTKEY + " MK:"
-		//		+ G333Config.g333Config.LIBRARY_MENUKEY);
-
-		// String sortkey = G333Config.g333Config.LIBRARY_SORTKEY;
 
 		// sPlayer.sendMessage("EventName:" + event.getEventName() + " Type:"
 		// + event.getType() + " ScreenType:" + event.getScreenType());
