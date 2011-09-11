@@ -14,8 +14,6 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 import dk.gabriel333.Library.G333Inventory;
 import dk.gabriel333.Library.G333Messages;
 
-//import dk.gabriel333.SortInventory.*;
-
 public class SortInventoryMenuListener extends SpoutListener {
 	public static SortInventory plugin;
 

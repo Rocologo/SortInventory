@@ -2,14 +2,10 @@ package dk.gabriel333.SortInventory;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-//import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-//import de.Keyle.MyWolf.MyWolfPlugin;
 import dk.gabriel333.Library.G333Inventory;
-
-//import dk.gabriel333.Library.G333Messages;
 
 public abstract class SortPlayerInventory implements Player {
 
