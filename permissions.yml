@@ -1,0 +1,53 @@
+# Permission example for SortInventory
+users:
+    Gabriel333:
+        permissions:
+            permissions.example: true
+        groups:
+        - admin
+    Testuser:
+        permissions:
+        - herp.derp
+        groups:
+        - Builder
+    TestBuilder:
+        permissions: []
+        groups:
+        - Builder
+    TestModerator:
+        permissions: []
+        groups:
+        - Moderator
+groups:
+    default:
+        permissions:
+            permissions.build: false
+    builder:
+        permissions:
+            permissions.build: true
+            sortinventory.use: true
+            sortinventory.stack.tools: true
+            sortinventory.stack.weapons: true
+            sortinventory.stack.armor: true
+            sortinventory.stack.food: true
+            sortinventory.stack.vehicles: true
+            worlds:
+                oceanworld:
+                    smartplugin.tool: true
+        inheritance:
+        - default
+    moderator:
+        permissions:
+            bar.foo: true
+        worlds:
+            OceanWorld:
+                coolplugin.item: true
+        inheritance:
+        - builder
+    admin:
+        permissions:
+            permissions.*: true
+        inheritance:
+        - moderator
+messages:
+    build: '&cYou do not have permission to build here.'

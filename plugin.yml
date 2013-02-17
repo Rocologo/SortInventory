@@ -1,0 +1,26 @@
+name: SortInventory
+main: dk.gabriel333.SortInventory.SortInventory
+version: 1.4.1
+author: gabriel333
+website: https://github.com/Gabriel333
+description: Use /sort to sort you personal inventory or the chest
+depend: [Spout]
+commands:
+    sort:
+        description: Rebuild all item stack in your inventory.
+        usage: /sort
+        aliases: /sortinventory 
+        permission: sortinventory.use
+permissions:
+    sortinventory.use:
+        default: true
+    sortinventory.stack.tools:
+        default: op
+    sortinventory.stack.armor:
+        default: op
+    sortinventory.stack.weapons:
+        default: op
+    sortinventory.stack.food: 
+        default: op
+    sortinventory.stack.vehicles:
+        default: op
