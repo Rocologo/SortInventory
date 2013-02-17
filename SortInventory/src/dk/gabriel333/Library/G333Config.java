@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.Plugin; 
 import org.bukkit.util.config.Configuration;
 
 @SuppressWarnings("deprecation")
